@@ -1,0 +1,8 @@
+Django>=4.0,<5.0              # Core framework for the project
+djangorestframework>=3.14.0   # Optional: For any REST API integrations
+django-crispy-forms>=1.14.0   # For better form rendering in the templates
+Pillow>=9.0.0                 # To handle image uploads, if any
+psycopg2>=2.9.6               # For PostgreSQL, if used as the database
+sqlite3                       # For SQLite, the default Django database
+django-filter>=23.2           # For filtering queries in views if needed
+django-messages>=0.6.0        # For flash messages and notifications

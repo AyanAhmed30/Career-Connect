@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Applications</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9; /* Light background */
+            margin: 0;
+            color: #333;
+        }
+
+        .header-title {
+            text-align: center;
+            color:black; /* Darker shade for title */
+            margin-bottom: 20px;
+        }
+
+        /* Navbar styling */
+        nav {
+            width: 1320px;
+            background-color: #f4f4f4; /* Light gray background for navbar */
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px; /* Space between navbar and content */
+            height: 23px;
+        }
+
+        nav .company-name {
+            font-size: 1.2rem; /* Increased size for company name */
+            font-weight: bold;
+            color: #333; /* Dark text for company name */
+        }
+
+        nav ul {
+            list-style-type: none;
+            display: flex;
+            gap: 15px; /* Space between menu items */
+        }
+
+        nav ul li {
+            font-size: 1rem; /* Standard size for menu items */
+            font-weight: bold;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #333; /* Dark text for links */
+            padding: 10px 15px;
+            border-radius: 4px; /* Rounded corners */
+            transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+        }
+
+        nav ul li a:hover {
+            background-color: #5e9e5f; /* Darker green on hover */
+            color: white; /* White text on hover */
+        }
+
+        /* Table styling */
+        table {
+            width: 90%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            background-color: white; /* White background for table */
+            margin-left: 50px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #27ae60; /* Green header */
+            color: white; /* White text for header */
+        }
+
+        tr:hover {
+            background-color: #e8f5e9; /* Light green on hover */
+        }
+
+        .link {
+            color: #27ae60; /* Green links */
+            text-decoration: none;
+        }
+
+        .link:hover {
+            text-decoration: underline; /* Underline on hover */
+        }
+
+        .manage-button {
+            background-color: #2ecc71; /* Bright green for manage button */
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .manage-button:hover {
+            background-color: #27ae60; /* Darker green on hover */
+            transform: scale(1.05);
+        }
+
+        .no-applications-message {
+            text-align: center; /* Center align no applications message */
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav>
+        <div class="company-name">
+            <a href="{% url 'company_dashboard' %}" style="text-decoration: none; color: inherit;">Dashboard</a>
+        </div>         <ul>
+          <li><a href="{% url 'post_job' %}">Post Job</a></li>
+          <li><a href="{% url 'applications' %}">Applications</a></li>
+          <li><a href="{% url 'company_jobs' %}">Company Jobs</a></li>
+          <li><a href="{% url 'logout_company' %}">Logout</a></li>
+      </ul>
+    </nav>
+
+    <h1 class="header-title">Job Applications</h1>
+
+    {% if applications %}
+    <table>
+        <thead>
+            <tr>
+                <th>Applicant</th>
+                <th>Job Title</th>
+                <th>Resume</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+                {% for application in applications %}
+                    <tr>
+                        <td>{{ application.user.username }}</td>
+                        <td>{{ application.job.title }}</td>
+                        <td><a href="{{ application.resume.url }}" target="_blank" class="link">View Resume</a></td>
+                        <td>
+                            <!-- Button to manage this specific application -->
+                            <form action="{% url 'manage_application' application.id %}" method="get">
+                                <button type="submit" class="manage-button">Manage Application</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+           </tbody>
+       </table>
+    {% else %}
+       <p class="no-applications-message">No job applications found.</p>
+    {% endif %}
+</body>
+</html>

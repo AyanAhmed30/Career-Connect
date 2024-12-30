@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <style>
+        /* Reset some basic styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body and container styling */
+        body {
+            background-color: white;
+            color: black;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 540px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 1.5rem; /* Reduced font size */
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px; /* Reduced gap */
+        }
+
+        form input, form button {
+            padding: 10px; /* Reduced padding */
+            font-size: 0.9rem; /* Reduced font size */
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            outline: none;
+            width: 470px;
+            border-color: #155724;
+        }
+
+        form input:focus, form button:focus {
+            border-color: #5e9e5f;
+        }
+
+        button {
+            cursor: pointer;
+            background-color: #155724;
+            color: white;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: grey;
+        }
+
+        p {
+            font-size: 0.9rem; /* Reduced font size */
+            font-weight: 400;
+        }
+
+        a {
+            color: black;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Make labels bold and slightly larger */
+        label {
+            font-weight: bold;
+            font-size: 1.1rem; /* Slightly larger font size for labels */
+        }
+
+        /* Styles for messages */
+        .messages {
+            margin-bottom: 20px; 
+            padding: 10px; 
+            border-radius: 5px; 
+        }
+        
+        .success {
+            background-color: #d4edda; 
+            color: #155724; 
+        }
+        
+        .error {
+            background-color: #f8d7da; 
+            color: #721c24; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Sign Up</h1>
+
+     <!-- Displaying success and error messages -->
+     {% if messages %}
+     <div class="messages">
+         {% for message in messages %}
+             <div class="message {% if message.tags == 'error' %}error{% else %}success{% endif %}">
+                 {{ message }}
+             </div>
+         {% endfor %}
+     </div>
+ {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            
+           <!-- Displaying form errors -->
+           {% for field in form %}
+               {% for error in field.errors %}
+                   <div class="error">{{ error }}</div>
+               {% endfor %}
+           {% endfor %}
+
+           <button type="submit">Register</button>
+       </form>
+
+       <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+    </div>
+</body>
+</html>

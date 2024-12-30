@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        /* Reset some basic styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body and container styling */
+        body {
+            background-color: white;
+            color: black;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.5rem; /* Reduced font size */
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px; /* Reduced gap */
+        }
+
+        form input, form button {
+            padding: 10px; /* Reduced padding */
+            font-size: 0.9rem; /* Reduced font size */
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            outline: none;
+            width: 100%; /* Ensure inputs and button take the full width */
+            border-color: #155724;
+
+        }
+
+        form input:focus, form button:focus {
+            border-color: #5e9e5f;
+        }
+
+        button {
+            cursor: pointer;
+            background-color: #155724;
+            color: white;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: grey;
+        }
+
+        p {
+            font-size: 0.9rem; /* Reduced font size */
+            font-weight: 400;
+            text-align: center;
+        }
+
+        a {
+            color: black;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Make labels bold and slightly larger */
+        label {
+            font-weight: bold;
+            font-size: 1.1rem; /* Slightly larger font size for labels */
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Login</h1>
+        <form method="post">
+            {% csrf_token %}
+            <label for="username">Username:</label>
+            <input type="text" name="username" id="username" required>
+            <label for="password">Password:</label>
+            <input type="password" name="password" id="password" required>
+            <button type="submit">Login</button>
+        </form>
+        <p>Don't have an account? <a href="{% url 'signup' %}">Sign up here</a></p> <!-- Sign up link -->
+    </div>
+</body>
+</html>

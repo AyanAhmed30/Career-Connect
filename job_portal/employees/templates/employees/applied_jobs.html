@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Applied Jobs</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Basic styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f6fa;
+            color: #333;
+        }
+        nav {
+            width: 100%;
+            background-color: #f4f4f4;
+            padding: 8px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+            height: 30px;
+        }
+
+        nav .company-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #333;
+            cursor: pointer;
+        }
+
+        nav ul {
+            list-style-type: none;
+            display: flex;
+            gap: 15px;
+        }
+
+        nav ul li {
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #333;
+            padding: 6px 12px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            background-color: #5e9e5f;
+            color: white;
+        }
+
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 15px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .job-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .job-table th, .job-table td {
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+
+        .job-table th {
+            background-color: #f4f4f4;
+        }
+
+        .status {
+            font-weight: bold;
+        }
+
+        .status.rejected {
+            color: red; /* Style for rejected applications */
+        }
+
+        .status.interview {
+            color: green; /* Style for interview applications */
+        }
+
+        .status.interview a {
+            color: green; /* Link color for interview */
+            text-decoration: none; /* Remove underline */
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="company-name">
+            <a href="{% url 'employee_dashboard' %}" style="text-decoration: none; color: inherit;">Dashboard</a>
+        </div>
+        <ul>
+            <li><a href="{% url 'find_job' %}">Find a Job</a></li>
+            <li><a href="{% url 'applied_jobs_list' %}">My Applied Jobs</a></li> 
+            <li><a href="{% url 'about_job' %}">Companies</a></li> 
+
+            <li><a href="{% url 'logout' %}" class="logout-button">Logout</a></li>
+        </ul>
+    </nav>
+
+<div class="container">
+    <h1>Your Applied Jobs</h1>
+
+    <table class="job-table">
+        <thead>
+            <tr>
+                <th>Job Title</th>
+                <th>Company</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for applied_job in applied_jobs %}
+                <tr>
+                    <td class="job-title">{{ applied_job.job.title }}</td>
+                    <td class="company-name">{{ applied_job.job.company.username }}</td>
+                    <td class="status {% if applied_job.status == 'Rejected' %}rejected{% elif applied_job.status == 'Interview' %}interview{% endif %}">
+                        {% if applied_job.status == 'Interview' %}
+                            <a href="{% url 'interview_details' applied_job.id %}">{{ applied_job.status }}</a> <!-- Link to interview details -->
+                        {% else %}
+                            {{ applied_job.status }}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% if not applied_jobs %}
+        <p>No applications found.</p>
+    {% endif %}
+</div>
+
+</body>
+</html>

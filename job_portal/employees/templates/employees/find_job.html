@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find a Job</title>
+    <style>
+        /* Basic reset and styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            font-family: Arial, sans-serif;
+            padding: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        p {
+            font-size: 1rem;
+            color: #666;
+        }
+
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+            display: inline-block;
+        }
+
+        input[type="file"] {
+            margin: 10px 0;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .success-message {
+            background-color: #28a745;
+            color: white;
+            padding: 10px;
+            margin-top: 20px;
+            border-radius: 4px;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 0.8rem;
+            margin-top: 30px;
+            color: #777;
+        }
+
+        nav {
+            width: 100%;
+            background-color: #f4f4f4;
+            padding: 8px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        nav .company-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #333;
+            cursor: pointer;
+        }
+
+        nav ul {
+            list-style-type: none;
+            display: flex;
+            gap: 15px;
+        }
+
+        nav ul li {
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #333;
+            padding: 6px 12px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            background-color: #5e9e5f;
+            color: white;
+        }
+
+        .search-form {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 60%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px 0 0 4px;
+            font-size: 1rem;
+            transition: padding-right 0.3s ease;
+        }
+
+        .search-btn {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-btn:hover {
+            background-color: #218838;
+        }
+
+        .clear-btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            font-size: 1.2rem;
+            color: #ccc;
+            cursor: pointer;
+            display: none;
+            transition: color 0.3s;
+        }
+
+        .clear-btn:hover {
+            color: #e74c3c;
+        }
+
+        .search-input:not(:empty) + .clear-btn {
+            display: block;
+        }
+
+        /* Heading */
+        .job-heading {
+            text-align: center;
+            font-size: 2.5em;
+            color: black;
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+
+        /* Success Messages */
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 10px 20px;
+            margin: 10px auto;
+            border-radius: 5px;
+            width: 60%;
+            text-align: center;
+        }
+
+        /* Job List */
+        .job-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 auto;
+            max-width: 900px;
+        }
+
+        /* Job Card */
+        .job-card {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Job Title */
+        .job-title {
+            font-size: 1.5em;
+            color: #34495e;
+            margin-bottom: 10px;
+        }
+
+        /* Job Description */
+        .job-description {
+            margin-bottom: 10px;
+            font-size: 1em;
+            line-height: 1.6;
+        }
+
+        /* Apply Form */
+        .apply-form {
+            margin-top: 15px;
+        }
+
+        .resume-label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .resume-input {
+            display: block;
+            width: 250px;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        /* Apply Button */
+        .apply-btn {
+            background-color: #27ae60;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .apply-btn:hover {
+            background-color: #219150;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            background-color: #218838;
+            padding: 10px 10px;
+            color: #fff;
+            margin-top: 30px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            heignt: 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="company-name">
+            <a href="{% url 'employee_dashboard' %}" style="text-decoration: none; color: inherit;">Dashboard</a>
+        </div>
+        <ul>
+            <li><a href="{% url 'find_job' %}">Find a Job</a></li>
+            <li><a href="{% url 'applied_jobs_list' %}">My Applied Jobs</a></li>
+            <li><a href="{% url 'about_job' %}">Companies</a></li> 
+
+            <li><a href="{% url 'logout' %}" class="logout-button">Logout</a></li>
+        </ul>
+    </nav>
+
+    <h1 class="job-heading">Available Jobs</h1>
+    
+    <!-- Search Bar -->
+    <form method="GET" action="{% url 'find_job' %}" class="search-form">
+        <input 
+            type="text" 
+            name="search_query" 
+            placeholder="Search for jobs by title, skills, or company..." 
+            class="search-input"
+            value="{{ request.GET.search_query|default_if_none:'' }}"
+            id="searchInput">
+        <button type="submit" class="search-btn">Search</button>
+        <button type="button" class="clear-btn" onclick="clearSearch()">×</button>
+    </form>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="message success-message">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+    
+    <ul class="job-list">
+        {% for job in jobs %}
+        <li class="job-card">
+            <h2 class="job-title">{{ job.title }}</h2>
+            <p class="job-description">{{ job.description }}</p>
+            <p><strong>Required Skills:</strong> {{ job.required_skills }}</p>
+            <p><strong>Experience:</strong> {{ job.experience }}</p>
+            <p><strong>Qualifications:</strong> {{ job.qualifications }}</p>
+            <p><strong>Posted By:</strong> {{ job.company.username }}</p>
+            <p><strong>Posted On:</strong> {{ job.posted_at }}</p>
+            
+            {% if job.id in applied_job_ids %}
+                <p class="applied-message">You have already applied for this job.</p>
+            {% else %}
+                <form method="POST" enctype="multipart/form-data" class="apply-form">
+                    {% csrf_token %}
+                    <input type="hidden" name="job_id" value="{{ job.id }}">
+                    <label for="resume" class="resume-label">Upload your resume:</label>
+                    <input type="file" name="resume" class="resume-input" required>
+                    <button type="submit" class="apply-btn">Apply</button>
+                </form>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+    
+    {% if jobs.count == 0 %}
+        <p class="no-jobs-message">No jobs are currently available.</p>
+    {% endif %}
+    
+    <footer class="footer">
+        &copy; 2024 Job Portal. All rights reserved.
+    </footer>
+
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const clearBtn = document.querySelector('.clear-btn');
+
+        // Show clear button when there's text in the search input
+        searchInput.addEventListener('input', function() {
+            if (searchInput.value.trim()) {
+                clearBtn.style.display = 'block';
+            } else {
+                clearBtn.style.display = 'none';
+            }
+        });
+
+        function clearSearch() {
+            searchInput.value = '';  // Clear the input
+            clearBtn.style.display = 'none';  // Hide the clear button
+            document.querySelector('form').submit(); // Submit the form to refresh job listings
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Job</title>
+    <style>
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            font-family: Arial, sans-serif;
+        }
+
+        nav {
+            width: 100%;
+            background-color: #f4f4f4;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            height: 20px;
+        }
+        nav .company-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: black;
+            cursor: pointer;
+        }
+
+        nav .company-name:hover {
+            color: #5e9e5f;
+        }
+
+        nav ul {
+            list-style-type: none;
+            display: flex;
+            gap: 15px;
+        }
+
+        nav ul li {
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #333;
+            padding: 10px 15px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            background-color: #5e9e5f;
+            color: white;
+        }
+
+         /* Green logout button */
+         nav ul li .logout-button {
+            background-color: #5e9e5f;
+            color: white;
+            font-weight: bold;
+        }
+
+        nav ul li .logout-button:hover {
+            background-color: #4b864b;
+        }
+
+        .job-edit-form {
+            padding: 30px;
+            max-width: 700px;
+            margin: 50px auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .job-edit-form h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: black;
+        }
+
+        .job-edit-form form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .job-edit-form form button {
+            padding: 12px;
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            cursor: pointer;
+            margin-top: 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .job-edit-form form button:hover {
+            background-color: #45a049;
+        }
+
+        .job-edit-form a {
+            text-decoration: none;
+            color: #4CAF50;
+            margin-top: 20px;
+            display: inline-block;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .job-edit-form a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="company-name">
+            <a href="{% url 'company_dashboard' %}" style="text-decoration: none; color: inherit;">Dashboard</a>
+        </div>        <ul>
+            <li><a href="{% url 'post_job' %}">Post Job</a></li>
+            <li><a href="{% url 'applications' %}">Applications</a></li>
+            <li><a href="{% url 'company_jobs' %}">Company Jobs</a></li>
+            <li><a href="{% url 'logout_company' %}">Logout</a></li>
+        </ul>
+    </nav>
+
+    <div class="job-edit-form">
+        <h2>Edit Job: {{ job.title }}</h2>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Save Changes</button>
+        </form>
+        <a href="{% url 'company_jobs' %}">Back to Job List</a>
+    </div>
+</body>
+</html>

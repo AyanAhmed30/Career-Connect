@@ -1,0 +1,39 @@
+Username: TechInnovators
+Email: contact@techinnovators.com
+Password: Te!srota2024#
+
+Username: GreenEnergyCorp
+Email: contact@greenenergycorp.com
+Password: Gr!proCy2024#
+
+Username: NextGenSolutions
+Email: contact@nextgensolutions.com
+Password: Ne!snoit2024#
+
+Username: CyberSecure
+Email: contact@cybersecure.com
+Password: Cy!eruce2024#
+
+Username: AlphaNetworks
+Email: contact@alphanetworks.com
+Password: Al!skrow2024#
+
+Username: BrightFutures
+Email: contact@brightfutures.com
+Password: Br!serut2024#
+
+Username: GlobalVentures
+Email: contact@globalventures.com
+Password: Gl!serut2024#
+
+Username: AquaSystems
+Email: contact@aquasystems.com
+Password: Aq!smets2024#
+
+Username: SkyHighTech
+Email: contact@skyhightech.com
+Password: Sk!hceTh2024#
+
+Username: SmartMinds
+Email: contact@smartminds.com
+Password: Sm!sdniM2024#

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post a Job</title>
+    <style>
+        /* Reset some basic styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body and container styling */
+        body {
+            background-color: white;
+            color: black;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1, h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            font-weight: bolder;
+        }
+
+        /* Navbar styling */
+        nav {
+            width: 100%;
+            background-color: #f4f4f4;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        nav .company-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        nav .company-name a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        nav ul {
+            list-style-type: none;
+            display: flex;
+            gap: 15px;
+        }
+
+        nav ul li {
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #333;
+            padding: 10px 15px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            background-color: #5e9e5f;
+            color: white;
+        }
+
+        nav ul li .logout-button {
+            background-color: #5e9e5f;
+            color: white;
+            font-weight: bold;
+        }
+
+        nav ul li .logout-button:hover {
+            background-color: #4b864b;
+        }
+
+        /* Post job container styling */
+        .post-job-container {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 500px;
+            margin-top: 20px;
+        }
+
+        .post-job-container h2 {
+            margin-bottom: 20px;
+        }
+
+        .post-job-container form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .post-job-container input,
+        .post-job-container textarea,
+        .post-job-container select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .post-job-container button {
+            cursor: pointer;
+            background-color:#27ae60 ;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .post-job-container button:hover {
+            background-color: grey;
+        }
+
+        /* Success message styling */
+        .alert {
+            width: 90%;
+            max-width: 500px;
+            margin-top: 20px;
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            padding: 15px;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .alert-message {
+            text-align: center;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            nav ul li {
+                margin: 5px 0;
+            }
+
+            h1, h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="company-name">
+            <a href="{% url 'company_dashboard' %}" style="text-decoration: none; color: inherit;">Dashboard</a>
+        </div>        <ul>
+            <li><a href="{% url 'post_job' %}">Post Job</a></li>
+            <li><a href="{% url 'applications' %}">Applications</a></li>
+            <li><a href="{% url 'company_jobs' %}">Company Jobs</a></li>
+            <li><a href="{% url 'logout_company' %}">Logout</a></li>
+        </ul>
+    </nav>
+    <!-- Display success message if job was posted -->
+  
+
+    <div class="post-job-container">
+        <h2>Post a Job</h2>
+        <!-- Ensure the CSRF token is included in the form -->
+        <form method="POST" action="{% url 'post_job' %}">
+            {% csrf_token %}
+            <input type="text" name="job_title" placeholder="Job Title" required><br>
+            <textarea name="job_description" placeholder="Job Description" required></textarea><br>
+            
+            <!-- New Fields Added Below -->
+            <input type="date" name="job_date" required><br>
+            <input type="text" name="required_skills" placeholder="Required Skills" required><br>
+            <input type="text" name="experience" placeholder="Experience Required (e.g., 2 years)" required><br>
+            <input type="text" name="qualifications" placeholder="Qualifications" required><br>
+            <input type="number" name="age" placeholder="Age (Optional)" min="18" max="100"><br>
+            
+            <button type="submit">Post Job</button>
+        </form>
+    </div>
+</body>
+</html>

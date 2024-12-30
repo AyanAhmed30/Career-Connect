@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Dashboard</title>
+    <style>
+        /* Basic reset and styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            font-family: Arial, sans-serif;
+            padding: 10px;
+        }
+
+        nav {
+            width: 100%;
+            background-color: #f4f4f4;
+            padding: 8px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        nav .company-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #333;
+            cursor: pointer;
+        }
+
+        nav ul {
+            list-style-type: none;
+            display: flex;
+            gap: 15px;
+        }
+
+        nav ul li {
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #333;
+            padding: 6px 12px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            background-color: #5e9e5f;
+            color: white;
+        }
+
+        header {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            margin-top: 20px;
+        }
+
+        .section {
+            margin-bottom: 20px;
+            padding: 16px;
+            background-color: #fff;
+            border-radius: 6px;
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .section h2 {
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+
+        .section p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .graph-container {
+            margin-top: 20px;
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 6px;
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+         width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 500px;
+        }
+
+        canvas {
+            width: 100%;
+            height: 200px; /* Reduced height for smaller graphs */
+        }
+
+        footer {
+            text-align: center;
+            font-size: 0.8rem;
+            margin-top: 30px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="company-name">
+            <a href="{% url 'employee_dashboard' %}" style="text-decoration: none; color: inherit;">Dashboard</a>
+        </div>
+        <ul>
+            <li><a href="{% url 'find_job' %}">Find a Job</a></li>
+            <li><a href="{% url 'applied_jobs_list' %}">My Applied Jobs</a></li> 
+            <li><a href="{% url 'about_job' %}">Companies</a></li> 
+
+            <li><a href="{% url 'logout' %}" class="logout-button">Logout</a></li>
+        </ul>
+    </nav>
+    
+
+    <header>
+        <h1>Welcome {{ request.user.username }} </h1>
+    </header>
+
+    <div class="section">
+        <h2>Job Listings</h2>
+        <p>Explore available jobs and apply for positions that match your skills.</p>
+    </div>
+
+    <!-- Graphs Section -->
+    <div class="graph-container">
+        <h2>Upcoming Trends: Technology Demand</h2>
+        <canvas id="technologyDemandLineChart"></canvas>
+    </div>
+
+    <div class="graph-container">
+        <h2>Technology Demand Over Time</h2>
+        <canvas id="technologyDemandBarChart"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Data for Point Line Chart (with points)
+        const ctxLine = document.getElementById('technologyDemandLineChart').getContext('2d');
+        const technologyDemandLineChart = new Chart(ctxLine, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                datasets: [{
+                    label: 'Technology Demand (in %) ',
+                    data: [10, 12, 15, 17, 19, 22, 25, 27, 30, 35, 40, 50],
+                    borderColor: 'rgba(94, 158, 95, 1)',
+                    backgroundColor: 'rgba(94, 158, 95, 0.2)',
+                    borderWidth: 2,
+                    tension: 0.4,
+                    pointRadius: 5, // Points on the line
+                    pointBackgroundColor: 'rgba(94, 158, 95, 1)',
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return tooltipItem.raw + '%';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        min: 0,
+                        max: 60,
+                        ticks: {
+                            stepSize: 10
+                        }
+                    }
+                }
+            }
+        });
+
+        // Data for Bar Time Chart
+        const ctxBar = document.getElementById('technologyDemandBarChart').getContext('2d');
+        const technologyDemandBarChart = new Chart(ctxBar, {
+            type: 'bar',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                datasets: [{
+                    label: 'Monthly Technology Demand',
+                    data: [10, 12, 15, 17, 19, 22, 25, 27, 30, 35, 40, 50],
+                    backgroundColor: 'rgba(94, 158, 95, 0.7)',
+                    borderColor: 'rgba(94, 158, 95, 1)',
+                    borderWidth: 1,
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return tooltipItem.raw + '%';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Months'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Technology Demand (%)'
+                        },
+                        ticks: {
+                            stepSize: 10,
+                            beginAtZero: true
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+
+    <footer>
+        <p>&copy; 2024 Employee Dashboard. All rights reserved.</p>
+    </footer>
+    
+</body>
+</html>

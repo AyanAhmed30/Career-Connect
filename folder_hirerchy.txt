@@ -1,0 +1,48 @@
+job_portal/
+├── job_portal/           # Main Django project folder
+│   ├── __init__.py
+│   ├── asgi.py
+│   ├── settings.py       # Main settings file
+│   ├── urls.py           # URL routing
+│   ├── wsgi.py
+├── manage.py             # Django management script
+├── companies/            # App for company-related functionalities
+│   ├── migrations/
+│   ├── templates/
+│   │   └── companies/
+│   │       ├── dashboard.html
+│   │       ├── applications.html          # New file
+│   │       ├── manage_application.html    # New file
+│   │       ├── post_job.html              # New file
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── apps.py
+│   ├── models.py
+│   ├── urls.py
+│   ├── views.py
+├── employees/            # App for employee-related functionalities
+│   ├── migrations/
+│   ├── templates/
+│   │   └── employees/
+│   │       ├── dashboard.html
+│   │       ├── about_job.html             # New file
+│   │       ├── find_job.html              # New file
+│   │       ├── view_application.html      # New file
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── apps.py
+│   ├── models.py
+│   ├── urls.py
+│   ├── views.py
+├── accounts/             # App for authentication
+│   ├── migrations/
+│   ├── templates/
+│   │   └── accounts/
+│   │       ├── signup.html
+│   │       ├── login.html
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── apps.py
+│   ├── models.py
+│   ├── urls.py
+│   ├── views.py

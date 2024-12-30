@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Jobs</title>
+    <style>
+        /* Reset some basic styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+    
+        /* Body and container styling */
+        body {
+            background-color: #f9f9f9; /* Light background */
+            color: #333; /* Dark text */
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        /* Navbar styling */
+        .navbar {
+            width: 100%;
+            background-color: #f4f4f4; /* Light gray background for navbar */
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 0;
+        }
+
+        .company-name {
+            font-size: 1.2rem; /* Increased size for company name */
+            font-weight: bold;
+            color: black; /* Black color for company name */
+            list-style: none;
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            display: flex;
+            gap: 15px; /* Space between menu items */
+        }
+
+        .navbar ul li {
+            font-size: 1rem; /* Standard size for menu items */
+            font-weight: bold;
+        }
+
+        .navbar ul li a {
+            text-decoration: none;
+            color: black; /* Black text for links */
+            padding: 10px 15px;
+            border-radius: 4px; /* Rounded corners */
+            transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+        }
+
+        .navbar ul li a:hover {
+            background-color: #5e9e5f; /* Darker green on hover */
+            color: white; /* White text on hover */
+        }
+
+        /* Style for logout button */
+        .navbar ul li:last-child a {
+            background-color: #5e9e5f; 
+            color: white; 
+        }
+
+        .navbar ul li:last-child a:hover {
+            background-color: darkgreen; 
+        }
+    
+        h1 {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 2rem; /* Increased font size */
+            font-weight: bold;
+            color: black; /* Darker shade for title */
+        }
+    
+        /* Jobs List Styles */
+        .jobs-list {
+            width: 90%;
+            max-width: 1200px;
+            margin-top: 30px;
+        }
+    
+        .jobs-list ul {
+            list-style-type: none; /* Remove default list styling */
+            padding: 0;
+        }
+    
+        .jobs-list ul li {
+            margin-bottom: 20px;
+            border-radius: 5px; /* Rounded corners */
+            background-color: white; /* White background for job listings */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Shadow effect */
+            padding: 15px; /* Padding inside job listings */
+        }
+    
+        .jobs-list ul li h2 {
+            font-size: 1.6rem; /* Increased font size for job title */
+            color: #2c3e50; /* Darker color for job title */
+        }
+    
+        .jobs-list ul li p {
+            font-size: 1rem; /* Standard font size for job details */
+            color: #666; /* Gray color for details */
+        }
+    
+        .jobs-list ul li .actions {
+            margin-top: 10px; /* Space above actions section */
+        }
+    
+        /* Delete Button */
+        .delete {
+            background-color: red; /* Red delete button */
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px; /* Rounded corners */
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease; /* Smooth transition effect */
+        }
+    
+        .delete:hover {
+            background-color: darkred; /* Darker red on hover */
+        }
+    
+       /* Edit Button */
+       .edit a {
+           background-color: #4CAF50; /* Green background for edit button */
+           color: white; 
+           padding: 5px 10px; 
+           border-radius: 4px; 
+           text-decoration: none; 
+           font-weight: bold; 
+           transition: background-color 0.3s ease, color 0.3s ease; 
+       }
+
+       .edit a:hover {
+           background-color: #45a049; 
+           color: white; 
+       }
+
+       /* Responsive Design */
+       @media screen and (max-width :768px) {  
+           .navbar ul {  
+               flex-direction :column ;  
+               align-items :center ;  
+           }  
+
+           .navbar ul li {  
+               margin :5px 0 ;  
+           }  
+
+           h1 {  
+               font-size :1.5rem ;  
+           }  
+
+           .jobs-list h1 {  
+               font-size :1.4rem ;  
+           }
+
+           .jobs-list ul li h2 {  
+               font-size :1.2rem ;  
+           }  
+       }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="company-name">
+          <a href="{% url 'company_dashboard' %}" style="text-decoration:none;">Dashboard</a>
+      </div>
+      <ul>
+          <li><a href="{% url 'post_job' %}">Post Job</a></li>
+          <li><a href="{% url 'applications' %}">Applications</a></li>
+          <li><a href="{% url 'company_jobs' %}">Company Jobs</a></li>
+          <li><a href="{% url 'logout_company' %}">Logout</a></li>
+      </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="jobs-list">
+        <h1>Your Posted Jobs</h1>
+
+        <!-- Display all posted jobs -->
+        {% if jobs %}
+        <ul>
+                {% for job in jobs %}
+                    <li>
+                        <h2>{{ job.title }}</h2>
+                        <p>{{ job.description }}</p>
+                        <p><strong>Skills Required:</strong> {{ job.required_skills }}</p>
+                        <p><strong>Experience:</strong> {{ job.experience }}</p>
+                        <p><strong>Qualifications:</strong> {{ job.qualifications }}</p>
+                        <p><strong>Age Requirement:</strong> {{ job.age }}</p>
+                        
+                        <!-- Edit and Delete Actions -->
+                        <div class="actions edit">
+                            <!-- Edit Button -->
+                            <a href="{% url 'edit_job' job.id %}" style="margin-right :10px;">Edit</a>
+
+                            <!-- Delete Button (Form) -->
+                            <form method="POST" action="{% url 'delete_job' job.id %}" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" name="delete" class="delete">Delete</button>
+                            </form>
+                        </div>
+                    </li>
+                {% endfor %}
+                </ul>
+                {% else %}
+                    <p>No jobs posted yet.</p>
+                {% endif %}
+    </div>
+
+</body>
+</html>

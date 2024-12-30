@@ -1,0 +1,39 @@
+Username: Alice_Williams
+Email: alice.williams@example.com
+Password: A!wR2@tU9yL#
+
+Username: Benjamin_Smith
+Email: benjamin.smith@example.com
+Password: B$sM8zT5&yQ!
+
+Username: Clara_Johnson
+Email: clara.johnson@example.com
+Password: C#jR6!nVy4pW
+
+Username: Daniel_Brown
+Email: daniel.brown@example.com
+Password: D^bW9mT@2xYz
+
+Username: Emily_Davis
+Email: emily.davis@example.com
+Password: E$dY8pX5!wRv
+
+Username: Frank_Miller
+Email: frank.miller@example.com
+Password: F@mT7zW^9pLy
+
+Username: Grace_Moore
+Email: grace.moore@example.com
+Password: G#mU5yR2@tX9
+
+Username: Henry_Taylor
+Email: henry.taylor@example.com
+Password: H$tL6xW^9zRm
+
+Username: Isabella_Clark
+Email: isabella.clark@example.com
+Password: I!cR8yT5&xL@
+
+Username: James_Wilson
+Email: james.wilson@example.com
+Password: J^wT9mX@7yLp

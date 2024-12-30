@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Job</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f9f9f9;
+            font-family: Arial, sans-serif;
+            color: #333;
+        }
+        nav {
+            width: 100%;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+            height: 50px;
+        }
+
+        nav .company-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #333;
+            cursor: pointer;
+            padding-bottom: 20px;
+            padding-left: 5px;
+        }
+
+        nav ul {
+            list-style-type: none;
+            display: flex;
+            gap: 15px;
+        }
+
+        nav ul li {
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #333;
+            padding: 6px 12px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            background-color: #5e9e5f;
+            color: white;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            margin-top: 30px;
+
+        }
+
+        /* Container for Company Cards */
+        div {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        /* Styling for Company Cards */
+        div > div {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            width: 250px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        div > div:hover {
+            transform: scale(1.05);
+        }
+
+        /* Styling for Company Name */
+        div > div h2 {
+            font-size: 1.5rem;
+            color: #34495e;
+            margin-bottom: 10px;
+        }
+
+        /* Styling for Company Email */
+        div > div p {
+            font-size: 1rem;
+            color: #7f8c8d;
+        }
+
+        /* Footer Styling */
+        footer {
+            text-align: center;
+            font-size: 0.9rem;
+            margin-top: 30px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="company-name">
+            <a href="{% url 'employee_dashboard' %}" style="text-decoration: none; color: inherit;">Dashboard</a>
+        </div>
+        <ul>
+            <li><a href="{% url 'find_job' %}">Find a Job</a></li>
+            <li><a href="{% url 'applied_jobs_list' %}">My Applied Jobs</a></li> 
+            <li><a href="{% url 'about_job' %}">Companies</a></li> 
+
+            <li><a href="{% url 'logout' %}" class="logout-button">Logout</a></li>
+        </ul>
+    </nav>
+    
+
+    <h1>All Registered Companies</h1>
+
+    <!-- Container for Company Cards -->
+    <div>
+        {% for company in companies %}
+            <div>
+                <h2>{{ company.username }}</h2>  <!-- Display company name -->
+                <p>{{ company.email }}</p>      <!-- Display company email -->
+            </div>
+        {% empty %}
+            <p>No companies found.</p>
+        {% endfor %}
+    </div>
+
+
+</body>
+</html>
